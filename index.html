@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- TÍTULO DA ABA ATUALIZADO -->
-    <title>Calculadora - Spencer Advogados</title>
+    <title>Painel de Performance - Spencer Advogados</title>
     <!-- Carregando Tailwind CSS para Estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,21 +11,21 @@
             theme: {
                 extend: {
                     colors: {
-                        // PALETA PROFISSIONAL
-                        'primary-dark': '#441615',    // Bordô Profundo
-                        'accent-light': '#ded2b7',    // Creme/Beige Sóbrio
-                        'background-base': '#F9FAFB', // Fundo Principal dos Cards
+                        // PALETA PROFISSIONAL (CORES RESTAURADAS)
+                        'primary-dark': '#441615',    // Bordô Profundo
+                        'accent-light': '#ded2b7',    // Creme/Beige Sóbrio (Fundo da Página)
+                        'background-base': '#F9FAFB', // Fundo dos Cards (Cinza Claro)
                         
                         // Cores das Tags (AJUSTADAS PARA SUTILEZA CORPORATIVA)
-                        'tag-cumprido': '#4C8A67',    // Verde Sutil (Borda e Texto)
-                        'tag-parcial': '#C5A55E',     // Ouro Sutil (Borda e Texto)
-                        'tag-falhou': '#B35C65',      // Vermelho Sutil (Borda e Texto)
+                        'tag-cumprido': '#1D7A4F',    // Verde Sutil (Borda e Texto)
+                        'tag-parcial': '#B47F0C',     // Ouro Sutil (Borda e Texto)
+                        'tag-falhou': '#A31F2A',      // Vermelho Sutil (Borda e Texto)
                         
                         // Cores de fundo dos balões
-                        'status-bg-cumprido': '#1D7A4F',    
-                        'status-bg-parcial': '#B47F0C',     
-                        'status-bg-falhou': '#A31F2A',      
-                        'status-bg-razoavel': '#607d8b',    // Novo: Azul/Cinza Neutro para Razoável
+                        'status-bg-cumprido': '#1D7A4F',    
+                        'status-bg-parcial': '#B47F0C',     
+                        'status-bg-falhou': '#A31F2A',      
+                        'status-bg-razoavel': '#607d8b',    // Novo: Azul/Cinza Neutro para Razoável
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -38,7 +37,8 @@
     <style>
         /* Estilos customizados para o container principal e inputs */
         .card-shadow {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            /* Sombra mais pronunciada para o painel principal */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
         }
         .input-box {
             border-radius: 0.75rem; 
@@ -52,24 +52,20 @@
             outline: none;
         }
         
-        /* Estilos da Navegação por Abas (ATUALIZADO PARA BOTOES MODERNOS) */
+        /* Estilos da Navegação por Abas (Mantidos) */
         .tab-button {
-            /* Transformando em botões modernos (pill-style) */
             @apply px-6 py-2 text-base font-bold rounded-xl transition-all duration-300 focus:outline-none;
-            @apply bg-background-base text-gray-700 hover:bg-gray-200 shadow-md;
-            /* Remove a borda padrão de abas */
+            @apply bg-white text-gray-700 hover:bg-gray-200 shadow-md;
             border-bottom: none !important;
         }
         .tab-button.active {
-            /* Cor de destaque sólida para a aba ativa */
             @apply bg-primary-dark text-white shadow-xl;
         }
-        /* Ajustar o foco para acessibilidade */
         .tab-button:focus-visible {
             @apply ring-4 ring-primary-dark/30;
         }
         
-        /* Cores de status para os balões - Mantidas para o Resultado Final */
+        /* Cores de status para os balões */
         .status-1 { @apply bg-status-bg-cumprido text-white font-semibold; }
         .status-05 { @apply bg-status-bg-parcial text-white font-semibold; } 
         .status-0 { @apply bg-status-bg-falhou text-white font-semibold; }
@@ -81,21 +77,28 @@
 
         /* Estilo para o dropdown de Nível de Cumprimento (Pilar 2) */
         .custom-select-wrapper {
-            @apply relative inline-block w-full max-w-[120px] sm:max-w-[140px]; 
+            @apply relative inline-block w-full max-w-[160px]; 
         }
 
         .custom-select {
             @apply input-box p-2 text-sm max-w-full appearance-none cursor-pointer rounded-lg bg-white border-2 transition-colors duration-200; 
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0.5rem;
+            padding-right: 2.5rem !important; 
             background-image: none;
+            /* Adicionado para garantir a remoção da seta padrão do browser */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
 
         .custom-select-icon {
             @apply pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700;
         }
         
-        /* Estilos de Impressão */
+        /* Estilos de Impressão (Mantidos) */
         @media print {
-            /* Esconde a interface da calculadora/abas e mostra apenas o conteúdo do relatório */
             body > header, 
             body > nav, 
             body > #calculator-view { 
@@ -112,20 +115,29 @@
                 max-width: none !important;
                 padding: 0 !important;
             }
+            #feedback-customization-form,
             .print-hidden { 
                 display: none !important; 
             }
-            .text-7xl { font-size: 3rem !important; } /* Reduz o tamanho do score para impressão */
+            #report-preview-content {
+                border-top: none !imporant;
+                padding-top: 0 !important;
+            }
+            .text-7xl { font-size: 3rem !important; } 
+            .text-2xl { font-size: 1.25rem !important; }
+            .text-xl { font-size: 1.1rem !important; }
+            .text-lg { font-size: 1rem !important; }
         }
 
     </style>
 </head>
+<!-- FUNDO DA PÁGINA ATUALIZADO para a cor original 'accent-light' -->
 <body class="bg-accent-light font-sans min-h-screen p-4 sm:p-8 flex justify-center items-start text-gray-800">
 
 <div class="w-full max-w-6xl mx-auto">
     <!-- TÍTULO PRINCIPAL (Acima das abas) -->
     <header class="text-center mb-6">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-primary-dark tracking-tight">Calculadora - Spencer Advogados</h1>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-primary-dark tracking-tight">Painel de Performance</h1>
     </header>
 
     <!-- BARRA DE NAVEGAÇÃO POR ABAS (CLASSES ATUALIZADAS) -->
@@ -135,57 +147,62 @@
     </nav>
 
 
-    <!-- CONTEÚDO DA ABA 1: CALCULADORA -->
+    <!-- CONTEÚDO DA ABA 1: CALCULADORA (LAYOUT DE PAINEL ÚNICO) -->
     <div id="calculator-view" class="w-full">
-        <!-- O CONTEÚDO ORIGINAL DA CALCULADORA VAI AQUI -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10"> 
+        <!-- PAINEL CENTRAL ÚNICO -->
+        <div class="w-full max-w-4xl mx-auto bg-background-base p-6 sm:p-8 rounded-2xl card-shadow border-t-4 border-primary-dark">
             
-            <!-- COLUNA 1: Input de Produtividade (Pilar 1) (lg:col-span-2) -->
-            <div class="lg:col-span-2 flex flex-col">
-                <div class="p-6 bg-background-base rounded-2xl card-shadow border-t-4 border-accent-light flex-grow">
+            <div class="space-y-10">
+
+                <!-- SEÇÃO 1: Produtividade e Volume -->
+                <div>
                     <h2 class="text-2xl font-bold mb-6 text-primary-dark border-b-2 border-primary-dark/30 pb-3 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-2 text-primary-dark"><path d="M3 3v18h18"/><path d="M18.7 8l-6.7 6.7-3.3-3.4L3 18"/></svg>
                         Pilar 1: Produtividade e Volume
                     </h2>
-
-                    <div class="space-y-6">
-                        <!-- Meta Semanal -->
-                        <div>
-                            <label class="block text-md font-medium text-gray-700 mb-2" for="meta-semanal">Meta Semanal de Pontos (MSP):</label>
-                            <input type="number" id="meta-semanal" value="0" min="1" class="input-box text-2xl font-bold text-primary-dark bg-white">
-                            <p class="text-xs text-gray-500 mt-1">Pontuação alvo para performance em volume.</p>
+                    
+                    <!-- Conteúdo do Pilar 1 (inputs) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                        <!-- Inputs -->
+                        <div class="space-y-6">
+                            <!-- Meta Semanal -->
+                            <div>
+                                <label class="block text-md font-medium text-gray-700 mb-2" for="meta-semanal">Meta Semanal de Pontos (MSP):</label>
+                                <input type="number" id="meta-semanal" value="0" min="1" class="input-box text-2xl font-bold text-primary-dark bg-white">
+                                <p class="text-xs text-gray-500 mt-1">Pontuação alvo para performance em volume.</p>
+                            </div>
+                            <!-- Pontos Ganhos -->
+                            <div>
+                                <label class="block text-md font-medium text-gray-700 mb-2" for="pontos-ganhos">Pontos de Produtividade Ganhos (PG):</label>
+                                <input type="number" id="pontos-ganhos" value="0" min="0" class="input-box text-2xl font-bold text-primary-dark bg-white">
+                            </div>
                         </div>
-
-                        <!-- Pontos Ganhos -->
-                        <div>
-                            <label class="block text-md font-medium text-gray-700 mb-2" for="pontos-ganhos">Pontos de Produtividade Ganhos (PG):</label>
-                            <input type="number" id="pontos-ganhos" value="0" min="0" class="input-box text-2xl font-bold text-primary-dark bg-white">
+                        
+                        <!-- Resultado Parcial Pilar 1 -->
+                        <div class="mt-0 md:mt-6 p-5 bg-gray-50 rounded-xl border border-gray-200 h-full flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium text-primary-dark">Pontuação Parcial de Volume (60%)</h3>
+                                <div class="flex items-end justify-between mt-2">
+                                    <p id="score-prod-display" class="text-4xl font-extrabold text-primary-dark">--%</p>
+                                </div>
+                            </div>
+                            <button onclick="calculatePilar1()" class="w-full text-sm font-bold text-primary-dark bg-accent-light hover:bg-[#c9b99e] transition-all duration-300 p-2.5 rounded-lg mt-4 shadow-md focus:outline-none focus:ring-4 focus:ring-primary-dark/30">
+                                Atualizar Volume
+                            </button>
                         </div>
                     </div>
-
-                    <!-- Resultado Parcial Produtividade -->
-                    <div class="mt-8 p-5 bg-accent-light rounded-xl border border-primary-dark/30">
-                        <h3 class="text-xl font-medium text-primary-dark">Pontuação Parcial de Volume (60%)</h3>
-                        <div class="flex items-end justify-between mt-2">
-                            <p id="score-prod-display" class="text-4xl font-extrabold text-primary-dark">--%</p>
-                        </div>
-                    </div>
-
-                    <!-- Botão de Cálculo Pilar 1 -->
-                    <button onclick="calculatePilar1()" class="w-full text-base font-bold text-white bg-primary-dark hover:bg-[#2e1010] transition-all duration-300 p-3 rounded-lg mt-4 shadow-md focus:outline-none focus:ring-4 focus:ring-primary-dark/50 main-button">
-                        Calcular Pontuação de Volume
-                    </button>
                 </div>
-            </div>
 
-            <!-- COLUNA 2: Indicadores de Qualidade (Pilar 2) (lg:col-span-3) -->
-            <div class="lg:col-span-3 flex flex-col">
-                <div class="bg-background-base p-6 sm:p-8 rounded-2xl card-shadow border-t-4 border-primary-dark flex-grow">
-                    <h2 class="text-2xl font-bold mb-6 text-primary-dark border-b-2 border-accent-light pb-3 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-2 text-status-bg-cumprido"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M10 8l4 4-4 4"/></svg>
+                <!-- SEÇÃO 2: Indicadores de Processo e Qualidade -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6 text-primary-dark border-b-2 border-primary-dark/30 pb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-status-bg-cumprido" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
                         Pilar 2: Indicadores de Processo e Qualidade
                     </h2>
-                    
+
+                    <!-- Conteúdo do Pilar 2 (tabela) -->
                     <div class="overflow-x-auto table-container">
                         <table class="min-w-full divide-y divide-accent-light rounded-lg overflow-hidden">
                             <thead class="bg-accent-light">
@@ -195,66 +212,64 @@
                                 </tr>
                             </thead>
                             <tbody id="indicator-table-body" class="bg-white divide-y divide-gray-100">
-                                <!-- Linhas de Indicadores serão inseridas aqui via JS -->
+                                <!-- Linhas de Indicadores serão inseridas here via JS -->
                             </tbody>
                         </table>
                     </div>
-                    
-                    <!-- Resultado Parcial Indicadores -->
-                    <div class="mt-auto pt-8"> <!-- mt-auto para empurrar para baixo, garantindo o alinhamento -->
-                        <div class="p-5 bg-accent-light rounded-xl border border-primary-dark/30">
-                            <h3 class="text-xl font-medium text-primary-dark">Pontuação Parcial de Qualidade (40%)</h3>
-                            <div class="flex items-end justify-between mt-2">
-                                <p id="score-indic-display" class="text-4xl font-extrabold text-primary-dark">--%</p>
+
+                    <!-- Resultado Parcial Pilar 2 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-6">
+                        <div class="md:col-start-2"> <!-- Alinha à direita -->
+                            <div class="p-5 bg-gray-50 rounded-xl border border-gray-200 flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-lg font-medium text-primary-dark">Pontuação Parcial de Qualidade (40%)</h3>
+                                    <div class="flex items-end justify-between mt-2">
+                                        <p id="score-indic-display" class="text-4xl font-extrabold text-primary-dark">--%</p>
+                                    </div>
+                                </div>
+                                <button onclick="calculatePilar2()" class="w-full text-sm font-bold text-primary-dark bg-accent-light hover:bg-[#c9b99e] transition-all duration-300 p-2.5 rounded-lg mt-4 shadow-md focus:outline-none focus:ring-4 focus:ring-primary-dark/30">
+                                    Atualizar Qualidade
+                                </button>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Botão de Cálculo Pilar 2 -->
-                        <button onclick="calculatePilar2()" class="w-full text-base font-bold text-primary-dark bg-accent-light hover:bg-primary-dark hover:text-white transition-all duration-300 p-3 rounded-lg mt-4 shadow-md focus:outline-none focus:ring-4 focus:ring-primary-dark/30 main-button">
-                            Calcular Pontuação de Qualidade
+                <!-- SEÇÃO 3: Resultado Final e Ações -->
+                <div class="pt-6 border-t border-gray-200 space-y-8">
+                    
+                    <!-- Resultado Final (Centralizado) -->
+                    <div class="max-w-xl mx-auto">
+                        <div id="pfd-box" class="p-8 text-center rounded-2xl shadow-xl transition-all duration-300 ease-in-out" style="display: none;">
+                            <p class="text-xl font-medium opacity-90">Desempenho Semanal Total:</p>
+                            <p id="pfd-display" class="text-7xl font-extrabold mt-2"></p>
+                            <p id="pfd-status" class="text-lg mt-4 font-semibold"></p>
+                        </div>
+                        <div id="report-link-info" class="mt-6 text-center text-sm font-medium text-gray-600" style="display: none;">
+                            <p>✅ Cálculo Concluído. Vá para a aba <button onclick="showView('report-view')" class="text-primary-dark font-bold hover:underline">Relatório de Feedback</button> para personalizar e gerar o documento.</p>
+                        </div>
+                    </div>
+
+                    <!-- Botões de Ação (Limpar e Calcular) -->
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-2">
+                        <button onclick="resetAll()" class="w-full sm:w-1/4 text-base font-bold text-primary-dark bg-accent-light hover:bg-[#c9b99e] transition-all duration-300 p-3 rounded-xl shadow-md main-button focus:outline-none focus:ring-4 focus:ring-primary-dark/30">
+                            LIMPAR TUDO
+                        </button>
+                        <button onclick="calculateFinal()" class="w-full sm:w-1/3 text-xl font-bold text-white bg-primary-dark hover:bg-[#2e1010] transition-all duration-300 p-3 rounded-xl shadow-xl main-button focus:outline-none focus:ring-4 focus:ring-primary-dark/50">
+                            CALCULAR AVALIAÇÃO FINAL
                         </button>
                     </div>
-                </div>
-            </div>
-
-            <!-- NOVA LINHA (lg:col-span-5): Botões Finais e Resultado (Full Width) -->
-            <div class="lg:col-span-5 space-y-8 pt-4">
-                
-                <!-- Botões de Ação (Limpar e Calcular) -->
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-2">
-                    <!-- Botão Limpar (Menor) -->
-                    <button onclick="resetAll()" class="w-full sm:w-1/4 text-base font-bold text-primary-dark bg-accent-light hover:bg-[#c9b99e] transition-all duration-300 p-3 rounded-xl shadow-md main-button focus:outline-none focus:ring-4 focus:ring-primary-dark/30">
-                        LIMPAR TUDO
-                    </button>
-                    <!-- Botão de Cálculo Único (Maior) -->
-                    <button onclick="calculateFinal()" class="w-full sm:w-1/3 text-xl font-bold text-white bg-primary-dark hover:bg-[#2e1010] transition-all duration-300 p-3 rounded-xl shadow-xl main-button focus:outline-none focus:ring-4 focus:ring-primary-dark/50">
-                        CALCULAR AVALIAÇÃO FINAL
-                    </button>
-                </div>
-
-                <!-- Resultado Final (Centralizado) -->
-                <div class="pt-2 max-w-xl mx-auto">
-                    
-                    <div id="pfd-box" class="p-8 text-center rounded-2xl shadow-xl transition-all duration-300 ease-in-out" style="display: none;">
-                        <p class="text-xl font-medium opacity-90">Desempenho Semanal Total:</p>
-                        <p id="pfd-display" class="text-7xl font-extrabold mt-2"></p>
-                        <p id="pfd-status" class="text-lg mt-4 font-semibold"></p>
-                    </div>
-
-                    <!-- Instrução para mudar de aba -->
-                    <div id="report-link-info" class="mt-6 text-center text-sm font-medium text-gray-600" style="display: none;">
-                        <p>✅ Cálculo Concluído. Vá para a aba <button onclick="showView('report-view')" class="text-primary-dark font-bold hover:underline">Relatório de Feedback</button> para personalizar e gerar o documento.</p>
-                    </div>
 
                 </div>
-            </div>
-        </div>
+
+            </div> <!-- Fim do space-y-10 -->
+        </div> <!-- Fim do painel central único -->
     </div>
 
 
-    <!-- CONTEÚDO DA ABA 2: RELATÓRIO DE FEEDBACK -->
+    <!-- CONTEÚDO DA ABA 2: RELATÓRIO DE FEEDBACK (Mantém o layout de card único) -->
     <div id="report-view" class="w-full" style="display: none;">
-        <div class="max-w-4xl mx-auto p-6 bg-background-base rounded-2xl card-shadow border-t-4 border-primary-dark">
+        <div class="max-w-4xl mx-auto p-6 sm:p-8 bg-background-base rounded-2xl card-shadow border-t-4 border-primary-dark">
             
             <h2 class="text-3xl font-bold text-primary-dark mb-6 border-b-2 border-accent-light pb-3">Personalizar e Gerar Relatório</h2>
 
@@ -277,6 +292,19 @@
                         <input type="text" id="final-score-display-form" class="input-box p-2 text-base font-bold text-primary-dark bg-gray-100 cursor-default" readonly>
                     </div>
                 </div>
+
+                <!-- SEÇÃO: Êxitos Opcionais -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700" for="feedback-liminares">Liminares Deferidas (Opcional):</label>
+                        <input type="number" id="feedback-liminares" placeholder="0" min="0" class="input-box p-2 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700" for="feedback-sentencas">Sentenças Favoráveis (Opcional):</label>
+                        <input type="number" id="feedback-sentencas" placeholder="0" min="0" class="input-box p-2 text-base">
+                    </div>
+                </div>
+
                 <!-- Comentários -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700" for="feedback-description">Comentários do Avaliador (Texto principal do feedback):</label>
@@ -307,19 +335,21 @@
 </div>
 
 <script>
-    // Dados fixos dos indicadores de qualidade (Pilar 2)
+    // Dados dos indicadores de qualidade (Pilar 2) - ATUALIZADOS
     const INDICATORS = [
-        { name: "Gestão de Prazo/Volume (Tarefas Imprevisíveis)", points: 13, id: "ind1" },
-        { name: "Qualidade Técnica na Redação de Peças", points: 13, id: "ind2" },
-        { name: "Proatividade na Obtenção de Subsídios", points: 8, id: "ind3" },
-        { name: "Comunicação de Diligências (Reporte ao Cliente)", points: 8, id: "ind4" },
-        { name: "Volume de Diligências Presenciais/Remotas (12 Demandas)", points: 5, id: "ind5" },
+        { name: "Qualidade da Entrega (Técnica e Formal)", points: 13, id: "ind1" },
+        { name: "Autogerenciamento (Organização e Priorização)", points: 13, id: "ind2" },
+        { name: "Gestão de Prazo/Volume (Tarefas Imprevisíveis)", points: 8, id: "ind3" },
+        { name: "Proatividade na Obtenção de Subsídios", points: 8, id: "ind4" },
+        { name: "Comunicação de Diligências (Reporte ao Cliente)", points: 8, id: "ind5" },
         { name: "Adesão ao Padrão Mínimo de Qualidade", points: 5, id: "ind6" },
-        { name: "Sucesso na Conquista de Andamentos Processuais", points: 3, id: "ind7" },
+        { name: "Volume de Diligências Presenciais/Remotas", points: 5, id: "ind7" },
+        { name: "Sucesso na Conquista de Andamentos", points: 3, id: "ind8" },
     ];
     
     // Soma total de pontos de Fibonacci dos Indicadores (PFT)
-    const PFT = INDICATORS.reduce((sum, ind) => sum + ind.points, 0); // 55
+    // Calculado dinamicamente
+    const PFT = INDICATORS.reduce((sum, ind) => sum + ind.points, 0); // Agora 63
 
     // Pesos fixos conforme a metodologia definida (60/40)
     const weightProd = 0.6; // Peso da Produtividade (Pilar 1)
@@ -364,9 +394,10 @@
         indicatorResults[indicatorId] = value;
         
         selectElement.classList.remove('border-tag-cumprido', 'text-tag-cumprido', 
-                                     'border-tag-parcial', 'text-tag-parcial',
-                                     'border-tag-falhou', 'text-tag-falhou');
+                                      'border-tag-parcial', 'text-tag-parcial',
+                                      'border-tag-falhou', 'text-tag-falhou');
         
+        // Usa as cores definidas no Tailwind config
         if (value === 1) {
             selectElement.classList.add('border-tag-cumprido', 'text-tag-cumprido');
         } else if (value === 0.5) {
@@ -406,6 +437,7 @@
             `;
             tableBody.appendChild(row);
 
+            // Aplica a cor inicial (Falhou)
             const selectElement = document.getElementById(`${indicator.id}-select`);
             handleIndicatorChange(selectElement, indicator.id);
         });
@@ -418,7 +450,7 @@
 
     function calculateScoreIndic() {
         let pontosGanhos = 0;
-        let totalPontosFibonacci = PFT;   
+        let totalPontosFibonacci = PFT;  
         INDICATORS.forEach(indicator => {
             const result = indicatorResults[indicator.id] || 0; 
             pontosGanhos += indicator.points * result;
@@ -436,7 +468,7 @@
     }
 
     function calculatePilar2() {
-        const scoreIndic = calculateScoreIndic();   
+        const scoreIndic = calculateScoreIndic();    
         globalScoreIndic = scoreIndic;
         document.getElementById('score-indic-display').textContent = `${(scoreIndic * 100).toFixed(2)}%`;
     }
@@ -490,10 +522,10 @@
 
     /**
      * Gera o conteúdo do relatório no painel de visualização da aba Relatório.
+     * ATUALIZADO para incluir a tabela de indicadores.
      */
     function generateReportContent() {
         if (finalPFDScore === 0 && document.getElementById('meta-semanal').value === "0") {
-            // Em um ambiente de produção, isso seria um modal customizado, mas aqui exibimos uma mensagem na prévia.
             document.getElementById('report-preview-content').innerHTML = `
                 <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
                     🚨 **Erro:** Por favor, clique em "CALCULAR AVALIAÇÃO FINAL" na aba "Calculadora" antes de gerar o relatório.
@@ -505,28 +537,115 @@
 
         const nome = document.getElementById('feedback-name').value || 'Não Informado';
         const dateInput = document.getElementById('feedback-date').value;
-        const data = dateInput ? new Date(dateInput).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+        // Ajuste para lidar com fuso horário na data
+        const data = dateInput ? new Date(dateInput + "T00:00:00").toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
         const descricao = document.getElementById('feedback-description').value || 'Nenhum comentário detalhado foi fornecido.';
         const score = `${(finalPFDScore * 100).toFixed(2)}%`;
 
+        // NOVOS CAMPOS OPCIONAIS
+        const liminares = document.getElementById('feedback-liminares').value;
+        const sentencas = document.getElementById('feedback-sentencas').value;
+
         let statusTextColor = 'text-gray-800';
         if (finalPFDStatusClass === 'bg-status-bg-cumprido') {
-            statusTextColor = 'text-status-bg-cumprido';
+            statusTextColor = 'text-tag-cumprido';
         } else if (finalPFDStatusClass === 'bg-primary-dark') {
             statusTextColor = 'text-primary-dark';
         } else if (finalPFDStatusClass === 'bg-status-bg-parcial') {
-            statusTextColor = 'text-status-bg-parcial';
+            statusTextColor = 'text-tag-parcial';
         } else if (finalPFDStatusClass === 'bg-status-bg-razoavel') {
             statusTextColor = 'text-status-bg-razoavel';
         } else if (finalPFDStatusClass === 'bg-status-bg-falhou') {
-            statusTextColor = 'text-status-bg-falhou';
+            statusTextColor = 'text-tag-falhou';
         }
 
-        // NOVO HTML SIMPLIFICADO
+        // --- INÍCIO: Seção Opcional de Êxitos ---
+        let successDetailsHTML = '';
+        // Verifica se os campos têm valores numéricos maiores que 0
+        const liminaresNum = parseInt(liminares, 10);
+        const sentencasNum = parseInt(sentencas, 10);
+
+        if (liminaresNum > 0 || sentencasNum > 0) { // Se um dos campos tiver valor
+            successDetailsHTML = `
+                <h3 class="text-xl font-bold text-primary-dark mb-3 mt-6">Êxitos da Semana:</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            `;
+
+            if (liminaresNum > 0) {
+                successDetailsHTML += `
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-600">Liminares Deferidas:</p>
+                        <p class="text-xl font-bold text-tag-cumprido">${liminaresNum}</p>
+                    </div>
+                `;
+            }
+            if (sentencasNum > 0) {
+                 successDetailsHTML += `
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p class="text-sm text-gray-600">Sentenças Favoráveis:</p>
+                        <p class="text-xl font-bold text-tag-cumprido">${sentencasNum}</p>
+                    </div>
+                `;
+            }
+
+             successDetailsHTML += `
+                </div>
+            `;
+        }
+        // --- FIM: Seção Opcional de Êxitos ---
+
+
+        // --- INÍCIO: Seção de Detalhamento dos Indicadores ---
+        let indicatorDetailsHTML = `
+            <h3 class="text-xl font-bold text-primary-dark mb-3 mt-6">Detalhamento dos Indicadores de Qualidade:</h3>
+            <div class="overflow-hidden border border-gray-200 rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Indicador</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Resultado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+        `;
+
+        INDICATORS.forEach(indicator => {
+            const resultValue = indicatorResults[indicator.id];
+            let resultText = "Falhou";
+            let resultClass = "text-tag-falhou"; // Usa as cores da config
+
+            if (resultValue === 1) {
+                resultText = "Cumprido";
+                resultClass = "text-tag-cumprido";
+            } else if (resultValue === 0.5) {
+                resultText = "Parcial";
+                resultClass = "text-tag-parcial";
+            }
+
+            indicatorDetailsHTML += `
+                <tr>
+                    <td class="px-4 py-3 text-sm text-gray-800">${indicator.name} <span class="text-xs text-gray-500">(${indicator.points} pts)</span></td>
+                    <td class="px-4 py-3 text-sm font-bold text-right ${resultClass}">${resultText}</td>
+                </tr>
+            `;
+        });
+
+        indicatorDetailsHTML += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        // --- FIM: Seção de Detalhamento dos Indicadores ---
+
+
+        // --- HTML FINAL DO RELATÓRIO (Atualizado) ---
         const reportHTML = `
             <div class="space-y-6">
-                <!-- CABEÇALHO LIMPO -->
-                <h3 class="text-2xl font-extrabold text-primary-dark border-b-2 border-primary-dark/30 pb-2 mb-4">Relatório de Feedback de Desempenho</h3>
+                <!-- CABEÇALHO MODERNO (Com Branding) -->
+                <div class="flex justify-between items-center border-b-2 border-primary-dark/30 pb-2 mb-4">
+                    <h3 class="text-2xl font-extrabold text-primary-dark">Relatório de Desempenho</h3>
+                    <span class="text-lg font-semibold text-primary-dark">Spencer Advogados</span>
+                </div>
 
                 <!-- LINHA DE DADOS PRINCIPAIS (Nome, Data, Pontuação/Status) -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-b border-accent-light pb-4 pt-2">
@@ -548,9 +667,15 @@
                     </div>
                 </div>
 
+                <!-- INJETAR ÊXITOS OPCIONAIS AQUI -->
+                ${successDetailsHTML}
+
+                <!-- INJETAR DETALHES DO INDICADOR AQUI -->
+                ${indicatorDetailsHTML}
+
                 <!-- COMENTÁRIOS -->
                 <div>
-                    <h3 class="text-xl font-bold text-primary-dark mb-3 mt-4">Comentários do Avaliador:</h3>
+                    <h3 class="text-xl font-bold text-primary-dark mb-3 mt-6">Comentários do Avaliador:</h3>
                     <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 whitespace-pre-wrap text-base leading-relaxed">
                         ${descricao}
                     </div>
@@ -604,6 +729,10 @@
         }
         document.getElementById('feedback-description').value = '';
         document.getElementById('final-score-display-form').value = '';
+
+        // NOVO: Resetar campos de êxitos
+        document.getElementById('feedback-liminares').value = '';
+        document.getElementById('feedback-sentencas').value = '';
 
         // Resetar pré-visualização do relatório
         document.getElementById('report-preview-content').innerHTML = '<p class="text-center text-gray-500">Preencha o formulário acima e clique em "GERAR VISUALIZAÇÃO PRÉVIA" para ver o relatório.</p>';
